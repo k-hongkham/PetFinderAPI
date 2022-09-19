@@ -1,31 +1,25 @@
 import React, { useEffect, useState, createContext } from "react";
 
-import { fetchAnimals, fetchToken } from "../../api";
+import { fetchPets } from "../../api";
 import SingleAnimal from "./SingleAnimal";
 import Pagination from "../Pagination/Pagination";
 
 const Animals = () => {
   const [animals, setAnimals] = useState([]);
-  const [token, setToken] = useState("");
+  const [pagination, setPagination] = useState([]);
+  const [animalsPerPage, setAnimalsPerPage] = useState(20);
 
   useEffect(() => {
     const access = async () => {
-      const token = await fetchToken();
-      setToken(token.access_token);
+      const pets = await fetchPets();
+      setAnimals(pets.animals);
 
       // setAnimalsPerPage(animals.pagination.count_per_page);
 
-      console.log("token", token);
+      console.log("animals", pets);
+      console.log("pagination", pagination);
     };
     access();
-  }, []);
-
-  useEffect(() => {
-    const accessPets = async () => {
-      const pets = await fetchAnimals(token);
-      setAnimals(pets);
-    };
-    accessPets();
   }, []);
 
   return (

@@ -32,6 +32,7 @@ server.use((req, res, next) => {
 });
 
 const PORT = process.env.PORT || 4000;
+server.set("port", PORT);
 
 const handle = server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}!`);
