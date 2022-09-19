@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-const Pagination = ({
-  animalsPerPage,
-
-  setCurrentPage,
-  currentPage,
-  setAnimalsPerPage,
-}) => {
+const Pagination = ({ animalsPerPage, setCurrentPage, currentPage }) => {
   const pageNumbers = [];
 
   const [pageNumberLimit] = useState(5);

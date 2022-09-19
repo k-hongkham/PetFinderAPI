@@ -52,21 +52,13 @@ const Animals = () => {
           </tbody>
         </table>
       </div>
-      {animalsList.length
-        ? animalsList.map((page) => {
-            return (
-              <div key={`pageList: ${page.id}`}>
-                <Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  animalsPerPage={animalsPerPage}
-                  setAnimalsPerPage={setAnimalsPerPage}
-                />
-                ;
-              </div>
-            );
-          })
-        : null}
+      {animalsList.length ? (
+        <Pagination
+          animalsPerPage={animalsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
+      ) : null}
     </div>
   );
 };
