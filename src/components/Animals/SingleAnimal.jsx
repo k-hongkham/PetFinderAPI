@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 const SingleAnimal = ({ animal }) => {
-  const [animalPhotos, setAnimalPhotos] = useState([]);
-
   return (
     <>
       <td>{animal.id}</td>
@@ -18,12 +16,14 @@ const SingleAnimal = ({ animal }) => {
           />
         </td>
       ) : (
-        <img
-          src="https://t3.ftcdn.net/jpg/03/76/74/78/360_F_376747823_L8il80K6c2CM1lnPYJhhJZQNl6ynX1yj.jpg"
-          alt="blank"
-          width="1"
-          height="1"
-        />
+        <td>
+          <img
+            src="https://t3.ftcdn.net/jpg/03/76/74/78/360_F_376747823_L8il80K6c2CM1lnPYJhhJZQNl6ynX1yj.jpg"
+            alt="blank"
+            width="1"
+            height="1"
+          />
+        </td>
       )}
 
       <td>{animal.type}</td>

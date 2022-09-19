@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { animalsData } from "../../api/animalsData";
+import React, { useEffect, useState, createContext } from "react";
+
+import { fetchPets } from "../../api";
 import SingleAnimal from "./SingleAnimal";
+import Pagination from "../Pagination/Pagination";
 
 const Animals = () => {
   const [animals, setAnimals] = useState([]);
-  const [animalPhotos, setAnimalPhotos] = useState([]);
+  const [pagination, setPagination] = useState([]);
+  const [animalsPerPage, setAnimalsPerPage] = useState(20);
 
   useEffect(() => {
-    console.log("animalsData:", animalsData);
-    const pictures = [];
-    const numberOfPhotos = animalsData.photos;
-    if (numberOfPhotos !== 0) {
-      pictures.push(animalsData);
-    }
-    console.log("animalsPhotos:", animalsData.photos);
-    setAnimals(animalsData);
-  });
+    const access = async () => {
+      const pets = await fetchPets();
+      setAnimals(pets.animals);
+      setPagination(animals.pagination);
+      // setAnimalsPerPage(animals.pagination.count_per_page);
+
+      console.log("animals", pets);
+      console.log("pagination", pagination);
+    };
+    access();
+  }, []);
+
   return (
     <div className="container mx-auto pb-3 mb-3 mb-md-5 mt-4">
       <div className="my-3 p-3 bg-body rounded shadow-sm">
@@ -34,8 +40,8 @@ const Animals = () => {
             </tr>
           </thead>
           <tbody>
-            {animalsData.length
-              ? animalsData.map((animal) => {
+            {animals
+              ? animals.map((animal) => {
                   return (
                     <tr key={`AnimalList: ${animal.id}`}>
                       <SingleAnimal animal={animal} />
@@ -46,6 +52,15 @@ const Animals = () => {
           </tbody>
         </table>
       </div>
+      {animals.length
+        ? animals.map((page) => {
+            return (
+              <div key={`pageList: ${page.id}`}>
+                <Pagination page={page} />;
+              </div>
+            );
+          })
+        : null}
     </div>
   );
 };

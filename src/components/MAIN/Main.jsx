@@ -4,7 +4,7 @@ import Animals from "../Animals/Animals";
 
 const Main = () => {
   return (
-    <div className="main">
+    <div>
       <Animals />
     </div>
   );
