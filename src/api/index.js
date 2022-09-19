@@ -38,23 +38,37 @@ const SECRET = "0rWM3LXYqcuQfxQgFKxZcLKXBlbHl1xSqvrBmakf";
 //   return petData;
 // };
 
-export const fetchPets = async () => {
+export const fetchToken = async () => {
   try {
-    const response = await fetch ("https://api.petfinder.com/v2/oauth2/token", {
+    const response = await fetch("https://api.petfinder.com/v2/oauth2/token", {
       method: "POST",
-      body: {
+      body:
         "grant_type=client_credentials&client_id=" +
         API_KEY +
         "&client_secret=" +
         SECRET,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-      }
-
-    }})
-    const token = await response.json.token()
-    return data
+      },
+    });
+    const token = await response.json();
+    return token.access_token;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
+
+export const fetchAnimals = async (token) => {
+  try {
+    const response = await fetch("https://api.petfinder.com/v2/animals", {
+      headers: {
+        Authorization: `Bearer  ${token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

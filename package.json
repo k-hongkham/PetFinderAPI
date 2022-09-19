@@ -3,6 +3,7 @@
     "@petfinder/petfinder-js": "^1.0.6",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
