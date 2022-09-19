@@ -5,23 +5,23 @@ import SingleAnimal from "./SingleAnimal";
 import Pagination from "../Pagination/Pagination";
 
 const Animals = () => {
-  const [animals, setAnimals] = useState([]);
-  const [pagination, setPagination] = useState([]);
+  const [animalsList, setAnimalsList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [animalsPerPage, setAnimalsPerPage] = useState(20);
-
+  const indexOfLastAnimal = currentPage * animalsPerPage;
+  const indexOfFirstAnimal = indexOfLastAnimal - animalsPerPage;
+  const currentAnimals = animalsList.slice(
+    indexOfFirstAnimal,
+    indexOfLastAnimal
+  );
   useEffect(() => {
     const access = async () => {
       const pets = await fetchPets();
-      setAnimals(pets.animals);
-
-      // setAnimalsPerPage(animals.pagination.count_per_page);
-
+      setAnimalsList(pets.animals);
       console.log("animals", pets);
-      console.log("pagination", pagination);
     };
     access();
   }, []);
-
   return (
     <div className="container mx-auto pb-3 mb-3 mb-md-5 mt-4">
       <div className="my-3 p-3 bg-body rounded shadow-sm">
@@ -40,8 +40,8 @@ const Animals = () => {
             </tr>
           </thead>
           <tbody>
-            {animals
-              ? animals.map((animal) => {
+            {animalsList
+              ? animalsList.map((animal) => {
                   return (
                     <tr key={`AnimalList: ${animal.id}`}>
                       <SingleAnimal animal={animal} />
@@ -52,11 +52,17 @@ const Animals = () => {
           </tbody>
         </table>
       </div>
-      {animals.length
-        ? animals.map((page) => {
+      {animalsList.length
+        ? animalsList.map((page) => {
             return (
               <div key={`pageList: ${page.id}`}>
-                <Pagination page={page} />;
+                <Pagination
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  animalsPerPage={animalsPerPage}
+                  setAnimalsPerPage={setAnimalsPerPage}
+                />
+                ;
               </div>
             );
           })

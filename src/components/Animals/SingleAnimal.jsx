@@ -6,7 +6,7 @@ const SingleAnimal = ({ animal }) => {
     <>
       <td>{animal.id}</td>
 
-      {animal.photos.length > 0 ? (
+      {/* {animal.photos.length > 0 ? (
         <td>
           <img
             src={animal.primary_photo_cropped.small}
@@ -24,7 +24,7 @@ const SingleAnimal = ({ animal }) => {
             height="1"
           />
         </td>
-      )}
+      )} */}
 
       <td>{animal.type}</td>
       <td>{animal.breeds.primary}</td>

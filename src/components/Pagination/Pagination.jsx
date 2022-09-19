@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 
 const Pagination = ({
-  listItemsPerPage,
-  totalUsers,
+  animalsPerPage,
+
   setCurrentPage,
   currentPage,
-  setListItemsPerPage,
+  setAnimalsPerPage,
 }) => {
   const pageNumbers = [];
 
   const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+  const totalAnimals = 265426;
 
   const paginate = (e, pageNumber) => {
     e.preventDefault();
@@ -38,13 +39,7 @@ const Pagination = ({
     }
   };
 
-  const handleLoadMoreContacts = () => {
-    const increasedItemsPerPage = listItemsPerPage + 3;
-    console.log("listItems#: ", increasedItemsPerPage);
-    setListItemsPerPage(increasedItemsPerPage);
-  };
-
-  for (let i = 1; i <= Math.ceil(totalUsers / listItemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalAnimals / animalsPerPage); i++) {
     pageNumbers.push(i);
   }
   return (
@@ -119,16 +114,6 @@ const Pagination = ({
           </button>
         </li>
       </ul>
-      <div className="justify-content-center">
-        <button
-          className="page-link"
-          onClick={() => {
-            handleLoadMoreContacts();
-          }}
-        >
-          Load More Contacts
-        </button>
-      </div>
     </div>
   );
 };
