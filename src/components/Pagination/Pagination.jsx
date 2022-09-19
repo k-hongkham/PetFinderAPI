@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { nextPage } from "../../api";
 
-const Pagination = ({ animalsPerPage, setCurrentPage, currentPage }) => {
+const Pagination = ({ animalsPerPage, setCurrentPage, currentPage, token }) => {
   const pageNumbers = [];
 
   const [pageNumberLimit] = useState(5);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+
   const totalAnimals = 265426;
 
   const paginate = (e, pageNumber) => {
@@ -25,12 +27,17 @@ const Pagination = ({ animalsPerPage, setCurrentPage, currentPage }) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    setCurrentPage(currentPage + 1);
+    const next = async () => {
+      const upcoming = await nextPage(currentPage + 1);
+      setCurrentPage(token, currentPage + 1);
+      console.log("page:", currentPage);
+    };
 
     if (currentPage + 1 > maxPageNumberLimit) {
       setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
       setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
     }
+    next();
   };
 
   for (let i = 1; i <= Math.ceil(totalAnimals / animalsPerPage); i++) {

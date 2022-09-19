@@ -14,11 +14,15 @@ const Animals = () => {
     indexOfFirstAnimal,
     indexOfLastAnimal
   );
+  const [token, setToken] = useState();
   useEffect(() => {
     const access = async () => {
       const pets = await fetchPets();
       setAnimalsList(pets.animals);
+
       console.log("animals", pets);
+      setToken(localStorage.getItem("token", token));
+      console.log("animaltoken", token);
     };
     access();
   }, []);
@@ -57,6 +61,7 @@ const Animals = () => {
           animalsPerPage={animalsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
+          token={token}
         />
       ) : null}
     </div>

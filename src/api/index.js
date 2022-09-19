@@ -23,6 +23,7 @@ export const fetchPets = async () => {
 
   // Return the response as JSON
   const token = await petFinderResp.json();
+  localStorage.setItem("token", token.access_token);
 
   // Log the API data
 
@@ -38,37 +39,21 @@ export const fetchPets = async () => {
   return petData;
 };
 
-// export const fetchToken = async () => {
-//   try {
-//     const response = await fetch("https://api.petfinder.com/v2/oauth2/token", {
-//       method: "POST",
-//       body:
-//         "grant_type=client_credentials&client_id=" +
-//         API_KEY +
-//         "&client_secret=" +
-//         SECRET,
-//       headers: {
-//         "Content-Type": "application/x-www-form-urlencoded",
-//       },
-//     });
-//     const token = await response.json();
-//     return token.access_token;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// export const fetchAnimals = async (token) => {
-//   try {
-//     const response = await fetch("https://api.petfinder.com/v2/animals", {
-//       headers: {
-//         Authorization: `Bearer  ${token}`,
-//         "Content-Type": "application/x-www-form-urlencoded",
-//       },
-//     });
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+export const nextPage = async (token, nextPage) => {
+  try {
+    const petResponse = await fetch(
+      `https://api.petfinder.com/v2/animals?page=${nextPage}`,
+      {
+        headers: {
+          Authorization: token.token_type + " " + token.access_token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    const petData = await petResponse.json();
+    console.log("petData: ", petData);
+    return petData;
+  } catch (error) {
+    console.error(error);
+  }
+};
